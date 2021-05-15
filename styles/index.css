@@ -1,0 +1,25 @@
+//off-white (#fcfbf9)
+// chicago-flag-blue (#58b9f7)
+// chicago-flag-red (#cc0000)
+
+body {
+    background-color: #fcfbf9;
+    color: #58b9f7;
+    font-family: monospace;
+    text-align: center;
+}
+
+#content {
+    width: 720px;
+    margin: 50px auto 25px;
+}
+
+.warning {
+    color: #cc0000;
+}
+
+.profile-picture {
+    border-radius: 50%;
+    height: 96px;
+    width: 96px;
+}
