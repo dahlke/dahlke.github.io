@@ -25,3 +25,21 @@ body {
     height: 96px;
     width: 96px;
 }
+
+#resume-container {
+    width: 720px;
+    margin: 0 auto 50px;
+}
+
+#resume-container iframe {
+    width: 100%;
+    min-height: 960px;
+    border: 0;
+    background-color: #ffffff;
+}
+
+.resume-status {
+    color: #58b9f7;
+    font-size: 14px;
+    margin-bottom: 12px;
+}

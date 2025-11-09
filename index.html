@@ -9,7 +9,7 @@
         src="https://www.gravatar.com/avatar/da28ae5ae15b10a04e89fbb8829d506c.jpg"
     />
     <h1>NEIL DAHLKE</h1>
-    <h2>ENGINEER</h2>
+    <h2>SOFTWARE SOLUTIONS ENGINEER</h2>
     <h3>SAN FRANCISCO, CALIFORNIA, USA</h3>
     <h4>
         <a href="https://github.com/dahlke">GITHUB</a> /
@@ -17,10 +17,76 @@
         <a href="https://x.com/neildahlke">X</a> /
         <a href="https://eklhad.medium.com/">MEDIUM</a> /
         <a href="https://www.linkedin.com/in/neildahlke/">LINKEDIN</a> /
-        <a href="https://www.strava.com/athletes/4351145">STRAVA</a>
+        <a href="https://www.strava.com/athletes/4351145">STRAVA</a> /
+        <a id="resume-link" href="#">RESUME</a>
     </h4>
 
     <p class="warning">
         If you're seeing this, the page (dahlke.io) is under maintenance.
     </p>
 </div>
+
+<div id="resume-container" hidden>
+    <div id="resume-status" class="resume-status">Loading resume...</div>
+    <iframe
+        id="resume-iframe"
+        title="Neil Dahlke Resume"
+        loading="lazy"
+        hidden
+    ></iframe>
+</div>
+
+<script>
+    (function () {
+        const RESUME_URL = "https://raw.githubusercontent.com/dahlke/eklhad/refs/heads/main/web/frontend/public/static/resume.html";
+        const resumeLink = document.getElementById("resume-link");
+        const resumeContainer = document.getElementById("resume-container");
+        const resumeStatus = document.getElementById("resume-status");
+        const resumeIframe = document.getElementById("resume-iframe");
+
+        if (!resumeLink || !resumeContainer || !resumeStatus || !resumeIframe) {
+            return;
+        }
+
+        let resumeLoaded = false;
+
+        resumeLink.addEventListener("click", async (event) => {
+            event.preventDefault();
+
+            const isHidden = resumeContainer.hasAttribute("hidden");
+
+            if (isHidden) {
+                resumeContainer.removeAttribute("hidden");
+
+                if (resumeLoaded) {
+                    return;
+                }
+
+                resumeStatus.hidden = false;
+                resumeStatus.textContent = "Loading resume...";
+                resumeIframe.hidden = true;
+
+                try {
+                    const response = await fetch(RESUME_URL);
+
+                    if (!response.ok) {
+                        throw new Error("Request failed with status " + response.status);
+                    }
+
+                    const resumeHtml = await response.text();
+                    resumeIframe.srcdoc = resumeHtml;
+
+                    resumeLoaded = true;
+                    resumeStatus.hidden = true;
+                    resumeIframe.hidden = false;
+                } catch (error) {
+                    console.error("Failed to load resume:", error);
+                    resumeStatus.hidden = false;
+                    resumeStatus.textContent = "Unable to load the resume right now. Please try again later.";
+                }
+            } else {
+                resumeContainer.setAttribute("hidden", "");
+            }
+        });
+    })();
+</script>
